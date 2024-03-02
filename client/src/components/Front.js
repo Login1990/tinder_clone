@@ -10,8 +10,12 @@ import TinderCloneCard from "./TinderCloneCard"
 function Front() {
   const navigate = useNavigate()
   const [childData, setChildData] = useState();
+  const [seed, setSeed] = useState();
   const cardRef = useRef();
   const isMounted = useRef(false)
+  const reset = () => {
+    setSeed(Math.random())
+  }
   async function authorize(){
     const token = localStorage.getItem("auth_token")
     console.log("Token is: "+ token)
@@ -36,18 +40,27 @@ function Front() {
         navigate("/login", {state: {error: "To use this page you need to log in!"}})
       }
   }
+
   const onSwipe = (direction) => {
     console.log('You swiped: ' + direction)
   }
   
-  const onCardLeftScreen = (myIdentifier) => {
-    console.log(myIdentifier + ' left the screen')
+  const yes_func = async (value) => {
+    await cardRef.current.swipe("right")
+  }
+
+  const no_func = async (value) => {
+    await cardRef.current.swipe("left")
+  }
+
+  const onCardLeftScreen = () => {
+    reset()
   }
   useEffect(()=>{
-    authorize() 
+    authorize()
   },[])
 
-  useEffect(()=>{
+/*  useEffect(()=>{
     async function func(){
       if(childData){
         await cardRef.current.swipe("right")
@@ -60,15 +73,15 @@ function Front() {
     } else {
       isMounted.current = true
     }
-  }, [childData])
+  }, [childData])*/
   return (
       /*<Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['right', 'left']}>Hello, World!</TinderCard>
       </Box>*/
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <Container maxWidth={'xs'}>
-          <TinderCard className="pressable" ref={cardRef} onSwipe={onSwipe} preventSwipe={["up","down"]} onCardLeftScreen={() => onCardLeftScreen('fooBar')}>
-            <TinderCloneCard passChildData={setChildData}/>
+          <TinderCard key={seed} className="pressable" ref={cardRef} onSwipe={onSwipe} preventSwipe={["up","down"]} onCardLeftScreen={() => onCardLeftScreen()}>
+            <TinderCloneCard yes_func={yes_func} no_func={no_func}/>
           </TinderCard>
         </Container>  
       </Box>
