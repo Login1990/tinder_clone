@@ -1,13 +1,17 @@
-import { Box, Container } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import TinderCard from 'react-tinder-card'
 import {useNavigate} from "react-router-dom"
+import TinderCloneCard from "./TinderCloneCard"
 
 
 
 function Front() {
   const navigate = useNavigate()
+  const [childData, setChildData] = useState();
+  const cardRef = useRef();
+  const isMounted = useRef(false)
   async function authorize(){
     const token = localStorage.getItem("auth_token")
     console.log("Token is: "+ token)
@@ -40,16 +44,33 @@ function Front() {
     console.log(myIdentifier + ' left the screen')
   }
   useEffect(()=>{
-    authorize()
+    authorize() 
   },[])
+
+  useEffect(()=>{
+    async function func(){
+      if(childData){
+        await cardRef.current.swipe("right")
+      } else {
+        await cardRef.current.swipe("left")
+      }
+    }
+    if (isMounted.current){
+      func()
+    } else {
+      isMounted.current = true
+    }
+  }, [childData])
   return (
       /*<Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['right', 'left']}>Hello, World!</TinderCard>
       </Box>*/
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <Container maxWidth={'xs'}>
-          <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')}>Hello, World!</TinderCard>
-        </Container>
+          <TinderCard className="pressable" ref={cardRef} onSwipe={onSwipe} preventSwipe={["up","down"]} onCardLeftScreen={() => onCardLeftScreen('fooBar')}>
+            <TinderCloneCard passChildData={setChildData}/>
+          </TinderCard>
+        </Container>  
       </Box>
   )
 }
