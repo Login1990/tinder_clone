@@ -9,10 +9,8 @@ import TinderCloneCard from "./TinderCloneCard"
 
 function Front() {
   const navigate = useNavigate()
-  const [childData, setChildData] = useState();
   const [seed, setSeed] = useState();
   const cardRef = useRef();
-  const isMounted = useRef(false)
   const reset = () => {
     setSeed(Math.random())
   }

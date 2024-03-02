@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Button, Card, CardContent, Typography } from '@mui/material';
 
 function TinderCloneCard(props) {
@@ -37,7 +37,7 @@ function TinderCloneCard(props) {
           }
         })
         const json = await response.json()
-        console.log(json)
+        setUserEmail(json.email)
       } catch (e){
         console.error(e)
       }
@@ -51,6 +51,10 @@ function TinderCloneCard(props) {
   function no_handler(){
     props.no_func()
   }
+
+  useEffect(()=>{
+    grabUserData()
+  }, [])
   return (
     <Card sx={{ maxWidth: 'xs', borderRadius: 16, margin: '0 auto', boxShadow: '0 8px 40px -12px rgba(0,0,0,0.3)', height: "80vh"}}>
       <CardContent>

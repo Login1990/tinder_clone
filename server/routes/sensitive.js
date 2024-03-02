@@ -21,9 +21,11 @@ const authorize = (req, res, next) => {
 
 router.get("/users/random", authorize, async (req, res, next)=>{
     const foundRandomUser = await User.aggregate([{ $sample: { size: 1 } }]);
-    console.log(foundRandomUser)
-    console.log(res.locals.user_data)
-    res.json({message: "Fuck you"})
+    if(foundRandomUser){
+        res.json({email: foundRandomUser[0].email})
+    } else {
+        res.json({email: "example@example.com"})
+    }
 })
 
 
