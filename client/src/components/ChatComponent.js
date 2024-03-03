@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
-import { Box, Grid, TextField, Paper } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Grid, TextField, Paper, Button} from '@mui/material';
 import {useNavigate} from "react-router-dom"
 
 const ChatComponent = () => {
   const navigate = useNavigate()
+  const [matchedUsers, setMatchedUsers] = useState()
+
   async function authorize(){
     const token = localStorage.getItem("auth_token")
     if( token ){
@@ -36,6 +38,7 @@ const ChatComponent = () => {
           }
         })
         const json = await response.json()
+        setMatchedUsers(json.arrayOfNames)
       } catch (e){
         console.error(e)
       }
@@ -87,11 +90,11 @@ const ChatComponent = () => {
         <Grid item xs={3}>
           <Paper sx={contactListStyle}>
             {/* Contact list goes here */}
-            <div>Contact 1</div>
-            <div>Contact 2</div>
-            <div>Contact 3</div>
-            <div>Contact 4</div>
-            <div>Contact 5</div>
+            {matchedUsers && matchedUsers.map((text, index) => (
+              <Button key={index}>
+                {text}
+              </Button>
+            ))}
           </Paper>
         </Grid>
         <Grid item xs={9} sx={{boxSizing: 'border-box'}}> 

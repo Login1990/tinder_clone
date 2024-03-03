@@ -7,7 +7,6 @@ var mongoose = require("mongoose")
 var cors = require("cors")
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var sensitiveRouter = require("./routes/sensitive")
 
 var app = express();
@@ -27,8 +26,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
-app.use('/sensitive', sensitiveRouter)
+app.use('/', indexRouter); //Routes that are ok to expose online
+app.use('/sensitive', sensitiveRouter) //Routes that could be exposed only to users
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

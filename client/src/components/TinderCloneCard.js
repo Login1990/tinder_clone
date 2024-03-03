@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { Button, Card, CardContent, Typography } from '@mui/material';
 
+
+//Primarly visual - the card fetches from backend and propagates it up, to the card "spawn point" to process
 function TinderCloneCard(props) {
   const [userEmail, setUserEmail] = useState()
   const buttonStyle = {

@@ -51,7 +51,7 @@ function Register() {
                     </FormControl>
                     <FormControl>
                         <InputLabel>Password</InputLabel>
-                        <Input id="my-password" aria-describedby="my-helper-text" value={password} onInput={e => setPassword(e.target.value)}/>
+                        <Input type="password" id="my-password" aria-describedby="my-helper-text" value={password} onInput={e => setPassword(e.target.value)}/>
                         <FormHelperText id="my-helper-text">We'll never share your password.</FormHelperText>
                     </FormControl>
                     <Button type="submit">Register</Button>

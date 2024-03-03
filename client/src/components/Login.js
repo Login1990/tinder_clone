@@ -47,6 +47,7 @@ function Login(props) {
         }
     }
     return (
+        //Basically a huge form with a status, in case you were where you are not meant to be
         <form onSubmit={handleSubmit}>
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
                 <Stack>
