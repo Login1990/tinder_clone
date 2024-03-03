@@ -41,7 +41,7 @@ function Login(props) {
                 navigate("/swipe")
             } else {
                 setStatus(token.message || token.error)
-            }
+            }   
         } catch(e){
             console.error(e)
         }

@@ -21,15 +21,18 @@ const authorize = (req, res, next) => {
 };
 
 router.get("/users/random", authorize, async (req, res, next)=>{
-    console.log(new mongoose.Types.ObjectId(res.locals.user_data._id))
     const foundRandomUser = await User.aggregate([{ $match: { _id: { $ne: new mongoose.Types.ObjectId(res.locals.user_data._id)} } }, { $sample: { size: 1 } }]);
-    console.log(foundRandomUser[0]._id)
     if(foundRandomUser){
         res.json({email: foundRandomUser[0].email})
     } else {
         res.json({email: "example@example.com"})
     }
 })
+
+router.post("/users/likes", authorize, (req,res,next)=>{
+    res.json({message: "hello"}) //dummy text, replace
+})
+
 
 
 module.exports = router

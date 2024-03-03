@@ -38,8 +38,25 @@ function Front() {
         navigate("/login", {state: {error: "To use this page you need to log in!"}})
       }
   }
+  async function addToLikedList(){
 
-  const onSwipe = (direction) => {
+  }
+
+  const onSwipe = async (direction) => {
+    if(direction === "right"){
+      const token = localStorage.getItem("auth_token")
+      if(token){
+        const response = await fetch("sensitive/users/likes",{
+          method: "POST",
+          headers: {
+            authorization: token
+          },
+          body: JSON.stringify({
+            hello: "message" //dummy text, replace
+          })
+        })
+      }
+    }
     console.log('You swiped: ' + direction)
   }
   

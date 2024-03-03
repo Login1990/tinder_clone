@@ -64,8 +64,6 @@ router.post("/login", async(req,res,next)=>{
           }
           const token = jwt.sign(payload, process.env.SECRET)
           res.status(200).json({token, message: "Successful login"})
-        } else{
-          throw err;
         }
       })
     } else {
