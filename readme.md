@@ -6,6 +6,24 @@
 This is a full-stack app developed by Lev Samin as a final project for Advanced Web Applications course.
 It is a Tinder clone, full list of features will be covered later in the document.
 
+## Features
+
+- Full-stack Tinder clone
+    - Swipeable cards
+    - Authentification/authorization
+    - Exchange contacts
+    - Chat (WIP)
+- Backend with Express.JS
+- Frontend with React
+    - Additional usage of MaterialUI library for styling
+- MongoDB for storage
+- Accessible design
+    - Website could be navigated entirely with keyboard, use `Tab` to switch between elements
+    - Profiles could be navigated with both buttons and swipes
+- Responsive design
+    - Application works well on all screensizes and devices
+
+
 ## Installation
 
 ### Prerequisites
