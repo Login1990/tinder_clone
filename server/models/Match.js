@@ -5,14 +5,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create UserLike Schema
-const UserLikeSchema = new Schema({
-  liker: {
+const MatchSchema = new Schema({
+  user1: {
     type: String
   },
-  liked: {
+  user2: {
     type: String
   }
 });
 
 // Create and export UserLike model
-module.exports = mongoose.model('UserLike', UserLikeSchema);
+module.exports = mongoose.model('Match', MatchSchema);

@@ -11,6 +11,7 @@ function Front() {
   const navigate = useNavigate()
   const [seed, setSeed] = useState();
   const cardRef = useRef();
+  const [likedUser, setLikedUser] = useState();
   const reset = () => {
     setSeed(Math.random())
   }
@@ -18,8 +19,6 @@ function Front() {
     const token = localStorage.getItem("auth_token")
     console.log("Token is: "+ token)
     if( token ){
-        console.log("Token found!")
-        console.log("Token verification...")
         try{
             const response = await fetch("/login/authentification", {
                 method: "GET",
@@ -38,21 +37,19 @@ function Front() {
         navigate("/login", {state: {error: "To use this page you need to log in!"}})
       }
   }
-  async function addToLikedList(){
-
-  }
-
+  
   const onSwipe = async (direction) => {
     if(direction === "right"){
       const token = localStorage.getItem("auth_token")
       if(token){
-        const response = await fetch("sensitive/users/likes",{
+        const response = await fetch("/sensitive/users/likes",{
           method: "POST",
           headers: {
-            authorization: token
+            "authorization": token,
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            hello: "message" //dummy text, replace
+            user: likedUser
           })
         })
       }
@@ -74,29 +71,11 @@ function Front() {
   useEffect(()=>{
     authorize()
   },[])
-
-/*  useEffect(()=>{
-    async function func(){
-      if(childData){
-        await cardRef.current.swipe("right")
-      } else {
-        await cardRef.current.swipe("left")
-      }
-    }
-    if (isMounted.current){
-      func()
-    } else {
-      isMounted.current = true
-    }
-  }, [childData])*/
   return (
-      /*<Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['right', 'left']}>Hello, World!</TinderCard>
-      </Box>*/
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <Container maxWidth={'xs'}>
           <TinderCard key={seed} className="pressable" ref={cardRef} onSwipe={onSwipe} preventSwipe={["up","down"]} onCardLeftScreen={() => onCardLeftScreen()}>
-            <TinderCloneCard yes_func={yes_func} no_func={no_func}/>
+            <TinderCloneCard yes_func={yes_func} no_func={no_func} user_func={setLikedUser} />
           </TinderCard>
         </Container>  
       </Box>

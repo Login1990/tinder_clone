@@ -38,6 +38,7 @@ function TinderCloneCard(props) {
         })
         const json = await response.json()
         setUserEmail(json.email)
+        user_handler(json.email)
       } catch (e){
         console.error(e)
       }
@@ -48,6 +49,9 @@ function TinderCloneCard(props) {
     props.yes_func()
   }
 
+  function user_handler(user){
+    props.user_func(user)
+  }
   function no_handler(){
     props.no_func()
   }
@@ -71,7 +75,7 @@ function TinderCloneCard(props) {
       <Button sx={redButtonStyle} onClick={() => {no_handler();}}>
         <span>&#10007;</span>
       </Button>
-      <Button sx={greenButtonStyle} onClick={() => {yes_handler();}}>
+      <Button sx={greenButtonStyle} onClick={() => {yes_handler();} }>
         <span>&#10003;</span>
       </Button>
     </Card>

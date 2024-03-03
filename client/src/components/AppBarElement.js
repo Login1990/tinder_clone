@@ -15,7 +15,7 @@ function AppBarElement() {
                     <Button component={Link} to="/swipe" color="inherit">Swipe</Button>
                     <Button component={Link} to="/chats" color="inherit">Chats</Button>
                     <Box sx={{marginLeft: "auto"}}> 
-                        {( location.pathname === "/login") ?  <></> : <Button color="inherit" component={Link} to="/login">Login</Button>}
+                        {(location.pathname === "/login") ?  <></> : <Button color="inherit" component={Link} to="/login">Login</Button>}
                         {(location.pathname === "/register") ?  <></> : <Button color="inherit" component={Link} to="/register">Register</Button>}
                     </Box>
                 </Toolbar>
