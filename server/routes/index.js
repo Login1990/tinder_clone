@@ -56,7 +56,8 @@ router.post("/login", async(req,res,next)=>{
         if(isMatch){
           const payload = {
             email: req.body.email,
-            password: foundUser.password
+            password: foundUser.password,
+            _id: foundUser._id
           }
           if(!process.env.SECRET){
             res.status(500).json({error:"Secret is not defined"})

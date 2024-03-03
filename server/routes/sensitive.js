@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require("jsonwebtoken")
 const User = require("../models/User")
+const mongoose = require("mongoose")
 
 // Middleware function for authorization
 const authorize = (req, res, next) => {
@@ -20,7 +21,9 @@ const authorize = (req, res, next) => {
 };
 
 router.get("/users/random", authorize, async (req, res, next)=>{
-    const foundRandomUser = await User.aggregate([{ $sample: { size: 1 } }]);
+    console.log(new mongoose.Types.ObjectId(res.locals.user_data._id))
+    const foundRandomUser = await User.aggregate([{ $match: { _id: { $ne: new mongoose.Types.ObjectId(res.locals.user_data._id)} } }, { $sample: { size: 1 } }]);
+    console.log(foundRandomUser[0]._id)
     if(foundRandomUser){
         res.json({email: foundRandomUser[0].email})
     } else {
